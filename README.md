@@ -1,45 +1,39 @@
-**!! Atenção: Renomeie o seu repositório para (Tema)_(NomeDoProjeto). !!** 
+# Final_Agenda2.0
 
-Temas:
- - Grafos1
- - Grafos2
- - PD
- - D&C
- - Greed
- - Final 
- 
- **!! *Não coloque os nomes dos alunos no título do repositório*. Exemplo de título correto: Grafos2_Labirinto-do-Minotauro !!**
- 
- (Apague essa seção)
-
-# NomedoProjeto
-
-**Número da Lista**: X<br>
-**Conteúdo da Disciplina**: XXXXXXXXXX<br>
+**Conteúdo da Disciplina**: Final<br>
 
 ## Alunos
-|Matrícula | Aluno |
-| -- | -- |
-| xx/xxxxxx  |  xxxx xxxx xxxxx |
-| xx/xxxxxx  |  xxxx xxxx xxxxx |
+|Matrícula | Aluno 
+| -- | -- | 
+| 18/0018159  |  Guilherme Veríssimo Cerveira Braz | 
+| 18/0108344  |  Rafael Berto Pereira | 
 
 ## Sobre 
-Descreva os objetivos do seu projeto e como ele funciona. 
+O Objetivo deste trabalho é melhorar a implementação da agenda de tarefas que foi implementada no módulo de algorítimo ambicioso.
 
+Além do algoritimo de Interval Scheduling na agenda, iremos utilizar uma inferencia de grafos para calcular a estimativa de duração de uma tarefa para depois organizar na agenda.
 ## Screenshots
-Adicione 3 ou mais screenshots do projeto em funcionamento.
+Em Breve
+
+## Video
+Em Breve
 
 ## Instalação 
-**Linguagem**: xxxxxx<br>
-**Framework**: (caso exista)<br>
-Descreva os pré-requisitos para rodar o seu projeto e os comandos necessários.
+```sh
+pip install PySimpleGUI 
+```
 
+```sh 
+pip install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib 
+```
+
+**Linguagem**: Python3 <br>
+**Bibliotecas**: 
+- PySimpleGUI; 
+- google-api-python-client;
+- google-auth-httplib2;
+- google-auth-oauthlib<br>
+
+**Pre-Requisitos**: Python 3.10.4 <br>
 ## Uso 
-Explique como usar seu projeto caso haja algum passo a passo após o comando de execução.
-
-## Outros 
-Quaisquer outras informações sobre seu projeto podem ser descritas abaixo.
-
-
-
-
+* python main.py
