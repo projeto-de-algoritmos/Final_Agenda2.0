@@ -17,14 +17,15 @@ class TelaAgenda:
                 key='-Calendar-', size=(9, 1), pad=(19, 3))],
             [sg.CalendarButton('Calendário', close_when_date_chosen=True,  target='-Calendar-',
                                location=(0, 0), no_titlebar=False, format='%d-%m-%Y')],
-            [sg.Text('Tempo estimado para conclusão em dias:'),
-             sg.Input(key='-Estimativa-', size=(3, 1))],
+            [sg.Text('Categorias de Trabalho:'), sg.Combo(
+                ["Grafos 1", "Grafos 2", "Greed", "Dividir e Conquistar", "Programação "], size=(16, 5), enable_events=True, key='-BtnCategorias-')],
             [sg.Button('Adicionar'), sg.Button('Excluir')],
             [sg.Exit('Concluir')]
         ]
 
         self.window = sg.Window('Agenda de Entregas', layout, finalize=True)
         self.trabalhos = []
+        self.categorias = []
         # list of events
 
     def encontra_Trabalhos(self):
@@ -40,6 +41,7 @@ class TelaAgenda:
         for cnt in self.trabalhos:
             if self.trabalhos[i].get_name() == deletado:
                 self.trabalhos.pop(i)
+                self.categorias.pop(i)
             i = i+1
 
     def janela_Secundaria(self):
@@ -74,7 +76,7 @@ class TelaAgenda:
 
     def desenhar_Janela(self):
         
-        keys_to_clear = ['-InputNome-', '-Calendar-', '-Estimativa-']
+        keys_to_clear = ['-InputNome-', '-Calendar-']
         while True:
             # print(self.values['-Calendar-'])
             # print(type(self.values['-Calendar-']))
@@ -87,8 +89,8 @@ class TelaAgenda:
                 # parse date in YYYY-MM-DD format to datetime object
                 deadline = self.values['-Calendar-']
                 deadline = datetime.strptime(deadline, '%d-%m-%Y')
-                event = Event(deadline=deadline, duration=int(
-                    self.values['-Estimativa-']), name=self.values['-InputNome-'])
+                event = Event(deadline=deadline, duration = 1, description=str(
+                    self.values['-BtnCategorias-']), name=self.values['-InputNome-'])
                 self.trabalhos.append(event)
                 sg.popup(
                     'Trabalho Adicionado!')
