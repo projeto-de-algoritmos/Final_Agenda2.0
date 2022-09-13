@@ -17,8 +17,9 @@ class TelaAgenda:
                 key='-Calendar-', size=(9, 1), pad=(19, 3))],
             [sg.CalendarButton('Calendário', close_when_date_chosen=True,  target='-Calendar-',
                                location=(0, 0), no_titlebar=False, format='%d-%m-%Y')],
-            [sg.Text('Categorias de Trabalho:'), sg.Combo(
-                ["Grafos 1", "Grafos 2", "Greed", "Dividir e Conquistar", "Programação "], size=(16, 5), enable_events=True, key='-BtnCategorias-')],
+            [sg.Text('Marque as categorias do Trabalho:')],
+            [sg.Checkbox('Grafos 1',key='grafos1'), sg.Checkbox('Grafos 2',key='grafos2'), sg.Checkbox('Greed',key='greed')],
+            [sg.Checkbox('Dividir e Conquistar',key='dc'), sg.Checkbox('Prog. Dinâmica',key='pd')],
             [sg.Button('Adicionar'), sg.Button('Excluir')],
             [sg.Exit('Concluir')]
         ]
@@ -41,7 +42,6 @@ class TelaAgenda:
         for cnt in self.trabalhos:
             if self.trabalhos[i].get_name() == deletado:
                 self.trabalhos.pop(i)
-                self.categorias.pop(i)
             i = i+1
 
     def janela_Secundaria(self):
@@ -49,7 +49,7 @@ class TelaAgenda:
         self.encontra_Trabalhos()
 
         layoutExclui = [
-            [sg.Text("Trabalho a ser excluido:"), sg.Combo(
+            [sg.Text('Trabalho a ser excluido:'), sg.Combo(
                 self.delecoes, size=(20, 5), enable_events=True, key='-BtnExcluir-')],
             [sg.Exit('Concluir'), sg.Exit('Cancelar')]
         ]
@@ -69,14 +69,14 @@ class TelaAgenda:
                 sg.popup(
                         'Trabalho excluido com sucesso!')
                 break
-            elif self.eventBtn == "-BtnExcluir-KEY DOWN":
+            elif self.eventBtn == '-BtnExcluir-KEY DOWN':
                 self.windowBtn['-BtnExcluir-'].Widget.event_generate('<Down>')
 
         self.windowBtn.close()
 
     def desenhar_Janela(self):
         
-        keys_to_clear = ['-InputNome-', '-Calendar-']
+        keys_to_clear = ['-InputNome-', '-Calendar-', 'grafos1', 'grafos2', 'greed', 'dc', 'pd']
         while True:
             # print(self.values['-Calendar-'])
             # print(type(self.values['-Calendar-']))
@@ -89,11 +89,27 @@ class TelaAgenda:
                 # parse date in YYYY-MM-DD format to datetime object
                 deadline = self.values['-Calendar-']
                 deadline = datetime.strptime(deadline, '%d-%m-%Y')
-                event = Event(deadline=deadline, duration = 1, description=str(
-                    self.values['-BtnCategorias-']), name=self.values['-InputNome-'])
+                
+                #verifica as categorias marcadas
+                if self.values['grafos1'] == True:
+                    self.categorias.append('Grafos_1')
+                if self.values['grafos2'] == True:
+                    self.categorias.append('Grafos 2')
+                if self.values['greed'] == True:
+                    self.categorias.append('Greed')
+                if self.values['dc'] == True:
+                    self.categorias.append('Dividir_e_Conquistar')
+                if self.values['pd'] == True:
+                    self.categorias.append('Progamação_Dinâmica')
+                    
+                event = Event(deadline=deadline, duration = 1, description=str(self.categorias), name=self.values['-InputNome-'])
                 self.trabalhos.append(event)
+                
+                self.categorias = []
+                
                 sg.popup(
                     'Trabalho Adicionado!')
+                self.categorias = []
                 for keys in keys_to_clear:
                     self.window[keys]('')
             elif self.event == 'Excluir':
