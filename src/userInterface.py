@@ -94,7 +94,7 @@ class TelaAgenda:
                 if self.values['grafos1'] == True:
                     self.categorias.append('Grafos_1')
                 if self.values['grafos2'] == True:
-                    self.categorias.append('Grafos 2')
+                    self.categorias.append('Grafos_2')
                 if self.values['greed'] == True:
                     self.categorias.append('Greed')
                 if self.values['dc'] == True:
@@ -125,5 +125,5 @@ class TelaAgenda:
     def start():
         UI = TelaAgenda()
         UI.desenhar_Janela()
-        print(UI.trabalhos)
+        # print(UI.trabalhos)
         return UI.trabalhos
