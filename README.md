@@ -42,7 +42,7 @@ Apos clicar no botão de excluir abre-se esse menu
 
 ![excl](screenshots/delecao.png)
 ## Video
-Em Breve
+Disponível na pasta video e pelo link do YouTube: https://youtu.be/knjeYrZxHPA
 
 ## Instalação 
 ```sh
