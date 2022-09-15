@@ -29,9 +29,9 @@ if __name__ == "__main__":
     print("\n\n\n")
 
     # create events on google calendar
-    # for event in schedule:
-        # create_event(
-            # event.name, event.start_time, event.end_time, event.description)
+    for event in schedule:
+        create_event(
+            event.name, event.start_time, event.end_time, event.description)
 
     # list events on google calendar
-    # list_events()
+    list_events()

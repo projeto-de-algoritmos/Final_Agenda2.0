@@ -5,6 +5,7 @@ import networkx as nx
 import matplotlib.pyplot as plt
 import sys
 from userInterface import TelaAgenda
+import itertools
 
 # nos e arestas do grafo
 nodes = ['Grafos_1', 'Grafos_2', 'Greed', 'Dividir_e_Conquistar', 'Progamação_Dinâmica']
@@ -59,6 +60,7 @@ class Graph():
             categories = event.description.split(',')
             print(categories)
             time = 0
+            
             # if there is category Grafos_2 in description there needs to be a Grafos_1 category
             # if there is category Progamação_Dinâmica in description there needs to be a Dividir_e_Conquistar category
 
@@ -79,31 +81,26 @@ class Graph():
             if start == end:
                 time = self.get_weight(start, end)
             else:
-                # find the shortest path between the first and last category
-                # the path must contain all categories
-                path = nx.shortest_path(self.G, start, end, weight='weight')
-                for i in range(len(path)-1):
-                    time += self.get_weight(path[i], path[i+1])
+                # get all paths between start and end
+                paths = nx.all_simple_paths(self.G, start, end)
+
+                #get only the paths that have all categories in it
+                paths = [path for path in paths if all(category in path for category in categories)]
+                for path in paths:
+                    print('Filtrados',path)
+                print()
+                # get all paths between start and end with weight
+                paths_weight = []
+                for path in paths:
+                    weight = 0
+                    for i in range(len(path)-1):
+                        weight += self.get_weight(path[i], path[i+1])
+                    paths_weight.append((path, weight))
+                # get path with minimum weight
+                paths_weight.sort(key=lambda x: x[1])
+                for path in paths_weight:
+                    print('Ordenados',path,' peso:',path[1])
+                time = paths_weight[0][1]
 
             event.set_duration(time)
             # return time
-
-        
-
-
-
-# #Test event list
-# eventsTest = [Event(deadline=parser.parse('2020-10-10'), duration=0, description='Grafos_1,Grafos_,ividir_e_Conquistar', name='Trabalho 1'),
-# Event(deadline=parser.parse('2020-10-10'), duration=0, description='Grafos_1,Dividir_e_Conquistar',nme='Trabalho 2'),
-# Event(deadline=parser.parse('2020-10-10'), duration=0, description='Grafos_1,Progamação_Dinâmica', name='Trabalho 3')]
-# events = TelaAgenda.start()
-# print('Normal',events)
-# print('Teste',eventsTest)
-# graph = Graph(events)
-
-# # graph.print_graph()
-# # graph.draw_graph()
-# graph.set_duration()
-
-# for event in events:
-    # print(event.duration)
